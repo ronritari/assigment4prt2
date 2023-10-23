@@ -10,25 +10,28 @@ namespace assignment4prt2
     {
 
 
-        private SortedList<double ,Flight> flights = new SortedList<double, Flight>();
+        private SortedList<Flight, double> flights = new SortedList<Flight, double>();
 
-        private string AirlineName { get; }
+        private readonly string airlineName;
 
-        public AirlineCompany(string airlineName)
+        public AirlineCompany(string AirlineName)
         {
-            AirlineName = airlineName;
+            airlineName = AirlineName;
         }
 
-        public Flight this[double Price] //use price as the key value so the list is sorted by price
+        public Flight this[int id] //use price as the key value so the list is sorted by price
         {
-            get { return flights[Price]; }  
-            set { flights.Add(Price, value); } //adds flight to the list. price is key
+
+            get { 
+                foreach (Flight flight in flights.Keys)
+                {
+                    return flight.Id == id ? flight: new Flight();
+                }
+                return new Flight();
+                }  
+            set { flights.Add(value, value.Price); } //adds flight to the list. price is key
         }
 
-        public void AddFlight(Flight flight)
-        {
-            flights.Add(flight.Price, flight); //method add flight so the objects can be transferred from main
-        }
 
 
         public Flight FindFlight(int flightId)
@@ -36,9 +39,9 @@ namespace assignment4prt2
             foreach(var flight in flights)
             {
                 //finds if the value of this fligts id is the same than the searched one
-                if (flight.Value.Id == flightId) 
+                if (flight.Key.Id == flightId) 
                 {
-                    return flight.Value;
+                    return flight.Key;
                 }
             }
             return null;
@@ -47,20 +50,20 @@ namespace assignment4prt2
         //gets the first object of the list
         public Flight GetCheapestFlight()
         {
-            return flights.Values[0];
+            return flights.Keys[0];
         }
 
         //gets the size of the list and returns the last object but list starts at 0 so - 1 ta the end 
         public Flight GetMostExpensiveFlight()
         {
-            return flights.Values[flights.Count() - 1];
+            return flights.Keys[flights.Count() - 1];
         }
 
         public void DisplayFlights()
         {
-            foreach (var flight in flights.Values)
+            foreach (var flight in flights.Keys)
             {
-                Console.WriteLine($"Flight ID: {flight.Id}, Origin: {flight.Origin}, Destination: {flight.Destination}, Date: {flight.Date}, Price: {flight.Price}£");
+                Console.WriteLine(flight.ToString());
             }
         }
     }

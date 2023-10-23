@@ -10,9 +10,11 @@ namespace assignment4prt2
         {
             AirlineCompany airline = new AirlineCompany("Finnair");
             
-            airline.AddFlight(new Flight(1, "helsinki", "lontoo", "2023-09-20", 450.0));
-            airline.AddFlight(new Flight(2, "helsinki", "munchen", "2023-09-22", 300.0));
-            airline.AddFlight(new Flight(3, "helsinki", "tel aviv", "2023-09-23", 225.0));
+            airline[0] = new Flight(1, "helsinki", "lontoo", "2023-09-20", 450.0);
+            airline[1] = new Flight(2, "helsinki", "munchen", "2023-09-22", 300.0);
+            airline[2] = new Flight(3, "helsinki", "tel aviv", "2023-09-23", 225.0);
+
+            Console.WriteLine(airline[3]);
 
             Console.WriteLine("all Flights:");
             airline.DisplayFlights();
@@ -21,7 +23,7 @@ namespace assignment4prt2
             int flightIdToFind = 2;
             Flight foundFlight = airline.FindFlight(flightIdToFind);
 
-            //checks that the flight id is real
+            //checks that the flight id is found
             if (foundFlight != null)
             {
                 Console.WriteLine($"\nflight with ID {flightIdToFind} found: {foundFlight.Origin} to {foundFlight.Destination}");

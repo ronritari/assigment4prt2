@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace assignment4prt2
 {
-    class Flight
+    class Flight : IComparable<Flight>
     {
         public int Id { get; set; }
         public string Origin { get; set; }
@@ -22,6 +23,31 @@ namespace assignment4prt2
             Date = date;
             Price = price;
         }
-       
+
+        public Flight() { } 
+
+        public override string ToString()
+        {
+            return $"Flight ID: {this.Id}, Origin: {this.Origin}, Destination: {this.Destination}, Date: {this.Date}, Price: {this.Price}£";
+        }
+
+        public int CompareTo(Flight obj)
+        {
+            if (obj == null)
+                return 0;
+            if (obj is Flight)
+            {
+                Flight temp = (Flight)obj;
+                if (this.Price > temp.Price)
+                    return 1;
+                else if (this.Price < temp.Price)
+                    return -1;
+                return 0;
+            }
+            return 0;
+        }
+
+
+
     }
 }
